@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hello Factory region measure</title>
+        <META http-equiv="Pragma" content="no-cache"/>
+        <META http-equiv="Expires" content="0"/>
+        <META http-equiv="Cache-Control" content="no-store"/>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./css/style.css?tt" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css?tt">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js?ttt"></script>
+    </head>
+
+    <body>
+
+        <h1>Hello Factory Region Measure</h1>
+        <h2>v1.0.3</h2>
+        <h2>This page has a purpose to measure regional network assessment and to find best way to support the region.</h2>
+        <h2>Total loading time: <span id="loadtime">wait...</span></h2>
+        <h2>DNS lookup time: <span id="dnstime">wait...</span></h2>
+        <h2>Connection initiate time: <span id="conntime">wait...</span></h2>
+        <h2>Content loading time: <span id="conttime">wait...</span></h2>
+        <h2>DOM loading time: <span id="domtime">wait...</span></h2>
+        <h2 id="uuid"></h2>
+        <button class="buttonload"><i class="fa fa-spinner fa-spin"></i>Button</button>
+        <script type="text/javascript">
+            window.onload = function() {
+                var json = window.performance.timing;
+                var loadtime = json.domComplete - json.navigationStart;
+                document.getElementById('loadtime').innerHTML = loadtime + '(ms)';
+                document.getElementById('dnstime').innerHTML = json.domainLookupEnd - json.domainLookupStart + '(ms)';
+                document.getElementById('conntime').innerHTML = json.connectEnd - json.connectStart + '(ms)';
+                document.getElementById('conttime').innerHTML = json.responseEnd - json.requestStart + '(ms)';
+                document.getElementById('domtime').innerHTML = json.domComplete - json.domLoading + '(ms)';
+
+                console.log(json);
+                // post request
+                // post_req(json);
+            }
+
+            function post_req(json) {
+                console.log(json);
+                var ts = Date.now();
+                // var body = JSON.parse(JSON.stringify(json));
+                var body = JSON.stringify(json);
+                console.log(body);
+                // $.ajax({
+                //     url: 'https://4syij8tg42.execute-api.ap-northeast-2.amazonaws.com/default/measure-kr',
+                //     data: body,
+                //     dataType: 'json',
+                //     method: 'post',
+                //     headers: {
+                //         "accept": "application/json",
+                //     },
+                //     success: function(res) {
+                //         document.getElementById('iloadtime').innerHTML = 'done';
+                //         document.getElementById('reqtime').innerHTML = Date.now() - ts + '(ms)';
+                //         document.getElementById('uuid').innerHTML = res.uuid;
+                //     },
+                //     error: function (xhr, status, error) {
+                //         document.getElementById('iloadtime').innerHTML = 'err';
+                //         console.log(xhr, status, error);
+                //     }
+                // })
+
+                // document.getElementById('iloadtime').innerHTML = 'start...';
+                // setTimeout(() => {
+                //     document.getElementById('iloadtime').innerHTML = 'done';
+                //     document.getElementById('reqtime').innerHTML = Date.now() - ts + '(ms)';
+                //     document.getElementById('uuid').innerHTML = 'uuid';
+                // }, 5000);
+            }
+        </script>
+    </body>
+</html>
